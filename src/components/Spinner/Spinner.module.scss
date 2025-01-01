@@ -1,0 +1,39 @@
+$size: 24px;
+
+.spinner {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.7);
+  animation: spin 1s linear infinite;
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
+  &::before {
+    content: '';
+    background: transparent;
+    opacity: 0.12;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  &.light {
+    border-top-color: rgba(255, 255, 255, 0.7);
+  }
+  &.dark {
+    border-top-color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
