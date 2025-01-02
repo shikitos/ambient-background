@@ -1,6 +1,7 @@
 import { PexelsImageOrientation, PexelsSearchResponse } from 'types';
-
 const Authorization = process.env.NEXT_PUBLIC_PEXELS_API_KEY!;
+const BASE_URL = 'https://api.pexels.com/v1/search';
+
 export type GetByNameOptions = {
   page?: number;
   per_page?: number;
@@ -16,12 +17,9 @@ export const getImageByName = async (
         .map(([key, value]) => `${key}=${value}`)
         .join('&')
     : '';
-  const response = await fetch(
-    `https://api.pexels.com/v1/search?query=${name}${params}`,
-    {
-      headers: { Authorization }
-    }
-  );
+  const response = await fetch(`${BASE_URL}?query=${name}${params}`, {
+    headers: { Authorization }
+  });
   const data = await response.json();
   return data;
 };

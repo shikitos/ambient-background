@@ -3,8 +3,8 @@
 import { concatClassNames as cn } from 'lib';
 import { useSearch } from './libs';
 import styles from './SearchBar.module.scss';
-import { SpinnerVariants } from 'components/Spinner/types';
-import { Overlay, Spinner } from 'components';
+import { SpinnerVariants } from 'common/Spinner/types';
+import { Overlay, Spinner } from 'common';
 
 export const SearchBar = () => {
   const { onSubmit, isLoading, isFocused, setIsFocused, inputRef } =

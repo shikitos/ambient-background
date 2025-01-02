@@ -1,13 +1,23 @@
-'use client';
-import styles from './page.module.css';
-import { SearchBar } from 'components/SearchBar';
-import { Background } from 'components/Background';
+import { cookies } from 'next/headers';
+import { SpotifyAuth } from '../components/SpotifyAuth';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
+export default async function Page() {
+  const cookieStore = await cookies();
+  const spotifyCookies = cookieStore.get('access_token')?.value;
+
+  if (spotifyCookies) redirect('/home');
   return (
-    <main className={styles.main}>
-      <SearchBar />
-      <Background />
-    </main>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw'
+      }}
+    >
+      <SpotifyAuth />
+    </div>
   );
 }

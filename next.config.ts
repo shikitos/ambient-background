@@ -6,12 +6,13 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'images.pexels.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.scdn.co'
       }
-    ],
-    unoptimized: true
-  },
-  output: 'export',
-  basePath: '/ambient-background'
+    ]
+  }
 };
 
 export default nextConfig;

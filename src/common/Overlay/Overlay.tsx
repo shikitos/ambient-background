@@ -1,3 +1,5 @@
+'use client';
+
 import { memo, useRef } from 'react';
 import styles from './Overlay.module.scss';
 import { CSSTransition } from 'react-transition-group';

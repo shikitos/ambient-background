@@ -1,0 +1,21 @@
+$image-size: 35px;
+
+.figure {
+  display: grid;
+  grid-template-columns: $image-size 1fr;
+  gap: 6px;
+  align-items: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  &__image {
+    width: $image-size;
+    height: $image-size;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  &__username {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}
