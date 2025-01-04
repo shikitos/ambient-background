@@ -1,0 +1,15 @@
+{
+  "api": {
+    "urls": {
+      "pexels": "https://api.pexels.com/v1",
+      "gpt": "https://api.groq.com/openai/v1/chat/completions",
+      "spotify": "https://accounts.spotify.com"
+    },
+    "cookies": {
+      "spotify": {
+        "access_token": "access_token",
+        "refresh_token": "refresh_token"
+      }
+    }
+  }
+}

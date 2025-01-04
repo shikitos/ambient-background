@@ -1,26 +1,19 @@
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import appConfig from 'config/config.json';
 
+const COOKIES = appConfig.api.cookies.spotify;
 export async function GET(req: Request) {
-  console.log('Received request:', req.method, req.url);
   const { searchParams } = new URL(req.url || '');
   const code = searchParams.get('code');
 
   if (!code) {
-    console.log('Missing authorization code');
-    return NextResponse.json(
-      { error: 'Missing authorization code' },
-      { status: 400 }
-    );
+    return NextResponse.redirect(process.env.NEXT_PUBLIC_BASE_URL!);
   }
 
   try {
-    console.log('Exchanging authorization code for tokens');
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
         grant_type: 'authorization_code',
         code: code,
@@ -30,30 +23,24 @@ export async function GET(req: Request) {
       })
     });
 
-    if (!response.ok) {
-      console.error('Failed to exchange authorization code:', response);
-      throw new Error('Failed to exchange authorization code');
-    }
+    if (!response.ok) throw new Error('Failed to exchange authorization code');
 
-    const data = await response.json();
-    const { access_token, refresh_token, expires_in } = data;
+    const { access_token, refresh_token, expires_in } = await response.json();
 
-    console.log('Successfully exchanged authorization code for tokens');
-
-    console.log(`Redirecting to ${process.env.NEXT_PUBLIC_BASE_URL}/home`);
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/home`, {
-      headers: {
-        'Set-Cookie': [
-          `access_token=${access_token}; SameSite=Strict;  Secure; Max-Age=${expires_in}`,
-          `refresh_token=${refresh_token}; SameSite=Strict; Secure`
-        ].join(', ')
-      }
+    const responseWithCookies = NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/auth/success`
+    );
+    responseWithCookies.cookies.set(COOKIES.access_token, access_token, {
+      sameSite: 'strict',
+      maxAge: expires_in
     });
+    responseWithCookies.cookies.set(COOKIES.refresh_token, refresh_token, {
+      sameSite: 'strict'
+    });
+
+    return responseWithCookies;
   } catch (error) {
     console.error('Error exchanging authorization code:', error);
-    return NextResponse.json(
-      { error: 'Failed to exchange authorization code' },
-      { status: 500 }
-    );
+    return NextResponse.redirect(process.env.NEXT_PUBLIC_BASE_URL!);
   }
 }

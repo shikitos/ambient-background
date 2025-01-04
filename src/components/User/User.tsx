@@ -4,6 +4,7 @@ import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import { fetchUserProfile } from 'lib';
 import styles from './User.module.scss';
+import config from 'config/config.json';
 
 export const User = () => {
   const [user, setUser] = useState<{ username: string; avatar: string } | null>(
@@ -12,7 +13,8 @@ export const User = () => {
 
   useEffect(() => {
     const getUserData = async () => {
-      const accessToken = getCookie('access_token');
+      const accessToken = getCookie(config.api.cookies.spotify.access_token);
+      console.log('getUserData', accessToken);
       if (!accessToken) return;
       const userData = await fetchUserProfile(accessToken as string);
       setUser(userData);
