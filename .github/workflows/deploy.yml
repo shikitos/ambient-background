@@ -49,9 +49,6 @@ jobs:
       - name: Sync lock file
         run: pnpm install
 
-      - name: Install dependencies with CI
-        run: pnpm ci
-
       - name: Build with Next.js
         run: pnpm next build
 
