@@ -1,19 +1,20 @@
-import { CSSTransition } from 'react-transition-group';
 import { DropdownProvider } from './providers';
-import { useDropdown } from './lib';
+import { PropsWithChildren } from 'react';
+import { Content } from './Content';
 
-type Item = {};
+type Item = {
+  label: string;
+  onClick: () => void;
+};
 
-type Props = {};
+type Props = PropsWithChildren<{
+  items: Item[];
+}>;
 
-export const Dropdown = () => {
-  const { isOpen } = useDropdown();
-
+export const Dropdown = (props: Props) => {
   return (
-    <CSSTransition in={isOpen} timeout={300} classNames="dropdown">
-      <DropdownProvider>
-        <div>Dropdown</div>
-      </DropdownProvider>
-    </CSSTransition>
+    <DropdownProvider>
+      <Content {...props} />
+    </DropdownProvider>
   );
 };

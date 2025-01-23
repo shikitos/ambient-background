@@ -14,7 +14,7 @@ $form-border-size: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: inherit;
+  height: calc(inherit - 35px);
   .form {
     display: grid;
     grid-template-columns: 1fr auto;
