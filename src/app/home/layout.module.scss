@@ -1,0 +1,8 @@
+$header-height: 60px;
+.header {
+  height: $header-height;
+}
+.main {
+  display: grid;
+  height: calc(100vh - $header-height);
+}

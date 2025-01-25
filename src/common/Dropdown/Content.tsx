@@ -1,3 +1,5 @@
+'use client';
+
 import { CSSTransition } from 'react-transition-group';
 import { useDropdown } from './lib';
 import { PropsWithChildren, useRef } from 'react';

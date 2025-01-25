@@ -26,3 +26,9 @@ export type PexelsSearchResponse = {
   url: string;
   photos: PexelsPhoto[];
 };
+
+export type PexelsSearchParams = {
+  page?: number;
+  per_page?: number;
+  orientation?: PexelsImageOrientation;
+};

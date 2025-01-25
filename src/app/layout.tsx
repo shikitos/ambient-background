@@ -3,7 +3,7 @@ import { Roboto } from 'next/font/google';
 import './globals.css';
 import { PropsWithChildren } from 'react';
 
-export const fontSans = Roboto({
+const fontSans = Roboto({
   variable: '--font-main',
   subsets: ['latin'],
   weight: '400'

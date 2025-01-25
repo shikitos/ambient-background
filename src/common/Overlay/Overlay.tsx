@@ -1,17 +1,24 @@
 'use client';
 
-import { memo, useRef } from 'react';
+import { memo, useRef, useEffect, useState } from 'react';
 import styles from './Overlay.module.scss';
 import { CSSTransition } from 'react-transition-group';
+import { createPortal } from 'react-dom';
 
 type Props = {
   isVisible: boolean;
 };
 
 export const Overlay = memo(function Overlay({ isVisible }: Props) {
-  const nodeRef = useRef(null);
+  const nodeRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState<boolean>(false);
 
-  return (
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+  return createPortal(
     <CSSTransition
       in={isVisible}
       timeout={300}
@@ -23,9 +30,11 @@ export const Overlay = memo(function Overlay({ isVisible }: Props) {
         exitActive: styles.overlay__exitActive,
         exitDone: styles.overlay__exitDone
       }}
+      unmountOnExit
       nodeRef={nodeRef}
     >
       <div ref={nodeRef} className={styles.overlay} />
-    </CSSTransition>
+    </CSSTransition>,
+    document.body
   );
 });

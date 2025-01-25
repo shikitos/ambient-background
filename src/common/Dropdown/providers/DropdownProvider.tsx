@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 import { DropdownContextType } from '../type';
 

@@ -1,31 +1,26 @@
 import { NextResponse } from 'next/server';
 import appConfig from 'config/config.json';
+import { SpotifyService } from 'services/spotify/spotify.service';
 
-const COOKIES = appConfig.api.cookies.spotify;
+const COOKIES = appConfig.api.spotify.cookies;
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url || '');
   const code = searchParams.get('code');
+  const spotifyService = new SpotifyService('');
 
   if (!code) {
     return NextResponse.redirect(process.env.NEXT_PUBLIC_BASE_URL!);
   }
 
+  console.log('code: ', code);
+
   try {
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        grant_type: 'authorization_code',
-        code: code,
-        redirect_uri: process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI!,
-        client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID!,
-        client_secret: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET!
-      })
-    });
-
-    if (!response.ok) throw new Error('Failed to exchange authorization code');
-
-    const { access_token, refresh_token, expires_in } = await response.json();
+    const response = await spotifyService.authorize(code);
+    console.log('@#@@ response: ', response);
+    if (!response.success) {
+      throw new Error(response.error.message);
+    }
+    const { access_token, refresh_token, expires_in } = response.data;
 
     const responseWithCookies = NextResponse.redirect(
       `${process.env.NEXT_PUBLIC_BASE_URL}/auth/success`

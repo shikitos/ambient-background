@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import appConfig from 'config/config.json';
 
 const protectedRoutes = ['/home'];
-const TOKEN = appConfig.api.cookies.spotify.access_token;
+const TOKEN = appConfig.api.spotify.cookies.access_token;
 export function middleware(request: NextRequest) {
   const nextUrl = request.nextUrl.pathname;
   const currentUrl = request.url;

@@ -1,14 +1,27 @@
 {
   "api": {
-    "urls": {
-      "pexels": "https://api.pexels.com/v1",
-      "gpt": "https://api.groq.com/openai/v1/chat/completions",
-      "spotify": "https://accounts.spotify.com"
-    },
-    "cookies": {
-      "spotify": {
+    "spotify": {
+      "account": {
+        "base": "https://accounts.spotify.com/api",
+        "paths": {
+          "token": "/token"
+        }
+      },
+      "base": "https://api.spotify.com/v1",
+      "paths": {
+        "profile": "/me"
+      },
+      "cookies": {
         "access_token": "access_token",
         "refresh_token": "refresh_token"
+      }
+    },
+    "pexels": {
+      "base": "https://api.pexels.com/v1",
+      "paths": {
+        "search": "/search",
+        "curated": "/curated",
+        "popular": "/popular"
       }
     },
     "gpt": {

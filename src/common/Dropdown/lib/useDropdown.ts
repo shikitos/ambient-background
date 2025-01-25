@@ -17,7 +17,6 @@ export const useDropdown = () => {
       if (!isOpen) return;
       setIsOpen(false);
     }
-
     document.addEventListener('click', checkIfClickedOutside);
     return () => {
       document.removeEventListener('click', checkIfClickedOutside);

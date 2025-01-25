@@ -4,3 +4,4 @@ export * from './Spinner';
 export * from './Overlay';
 export * from './Button';
 export * from './Dropdown';
+export * from './Skeleton';
