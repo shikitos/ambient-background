@@ -55,7 +55,11 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: .next
+          name: github-pages
+          retention-days: 1
+        env:
+          GITHUB_PAGES: true
 
   deploy:
     environment:

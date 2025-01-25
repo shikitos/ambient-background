@@ -25,6 +25,14 @@
       &:hover {
         background-color: #f1f1f1;
       }
+      &__button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        &:hover {
+          background-color: #f1f1f1;
+        }
+      }
     }
 
     .enter {
