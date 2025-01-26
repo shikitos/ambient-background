@@ -13,53 +13,38 @@ permissions:
 
 concurrency:
   group: 'pages'
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install pnpm
         run: npm install -g pnpm
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
           cache: pnpm
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-
       - name: Install dependencies
         run: pnpm install
 
-      - name: Sync lock file
-        run: pnpm install
+      - name: Build and export static site
+        run: |
+          pnpm build
+          pnpm next export
 
-      - name: Build with Next.js
-        run: pnpm next build
-
-      - name: Upload artifact
+      - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .next
+          path: out
           name: github-pages
           retention-days: 1
-        env:
-          GITHUB_PAGES: true
 
   deploy:
     environment:
